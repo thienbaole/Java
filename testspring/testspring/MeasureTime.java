@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class MeasureTime {
 	
 	@Autowired
-	private SerializeObject tool;
-	@Autowired
 	private StoreRecord store;
 	public void recordStartTime()
 	{
@@ -29,8 +27,8 @@ public class MeasureTime {
 			//create RunTimeRecord
 			RuntimeRecord record = new RuntimeRecord(Long.toString(start), Long.toString(end), joinpoint.getTarget().getClass().getName(), joinpoint.getSignature().getName());
 			//SerializeObject serialize = new JSONSerialization();
-			System.out.println(tool.doSerialize(record));
-			System.out.println(store.doStore(record));
+			System.out.println(record);
+			store.doStore(record);
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

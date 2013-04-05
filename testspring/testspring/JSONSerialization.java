@@ -10,5 +10,10 @@ public class JSONSerialization implements SerializeTool {
 		Gson gson = new Gson();
 		return gson.toJson(obj);
 	}
+	public RuntimeRecord doDeserialize(String json)
+	{
+		Gson gson = new Gson();
+		return (RuntimeRecord)gson.fromJson(json, RuntimeRecord.class);
+	}
 
 }

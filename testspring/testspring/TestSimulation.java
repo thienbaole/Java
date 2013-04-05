@@ -10,5 +10,7 @@ public class TestSimulation {
 		//System.out.println("test!");
 		Simulation sim = (Simulation) context.getBean("simulation");
 		sim.method1(100);
+		
+		//RuntimeRecordHandler handler =(RuntimeRecordHandler) context.getBean("runtimeRecordHandler");
 	}
 }

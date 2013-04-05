@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jms="http://www.springframework.org/schema/jms"
+ 	xmlns:amq="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+					 http://activemq.apache.org/schema/core
+					 http://activemq.apache.org/schema/core/activemq-core-5.5.0.xsd
+					 http://www.springframework.org/schema/jms
+					 http://www.springframework.org/schema/jms/spring-jms-3.0.xsd">
+
+<amq:connectionFactory id="connectionFactory" brokerURL="tcp://localhost:61616"/>
+<bean id="topic" class="org.apache.activemq.command.ActiveMQTopic">
+	<constructor-arg value="runtime.topic"/>
+</bean>
+<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+	<property name="connectionFactory" ref="connectionFactory" />
+	<property name="pubSubDomain" value="true"/>
+	<property name="defaultDestination" ref="topic"/>
+</bean>
+
+   <bean id="jsontool"
+  		class="testspring.testspring.JSONSerialization" />
+<bean id="runtimeRecordHandler" class="testspring.testspring.RuntimeRecordHandler" >
+<property name="tool" ref="jsontool" />
+<property name="runtimeRecordJDBCTemplate" ref="JDBCTemplate" />
+</bean>
+<jms:listener-container connection-factory="connectionFactory" destination-type="topic"> 
+	<jms:listener destination="runtime.topic" ref="runtimeRecordHandler" method="processRuntimeRecord" /> 
+</jms:listener-container>
+
+ <!-- Initialization for data source -->
+   <bean id="dataSource" 
+      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+      <property name="url" value="jdbc:mysql://localhost:3306/thien"/>
+      <property name="username" value="root"/>
+      <property name="password" value="thienwin"/>
+   </bean>
+
+   <!-- Definition for runtimeRecordJDBCTemplate bean -->
+<bean id="JDBCTemplate" 
+      class="testspring.testspring.RuntimeRecordJDBCTemplate">
+      <property name="dataSource"  ref="dataSource" />    
+   </bean>
+
+</beans>
