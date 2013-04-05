@@ -9,8 +9,8 @@ public class ConsumerMain {
 	{
 		ApplicationContext context = new ClassPathXmlApplicationContext("consumer.xml");
 		System.out.println("From consumer...");	
-		RuntimeRecordHandler handler =(RuntimeRecordHandler) context.getBean("runtimeRecordHandler");
-		RuntimeRecordJDBCTemplate runtimeJDBCTemplate = 
-			      (RuntimeRecordJDBCTemplate)context.getBean("JDBCTemplate");
+		//RuntimeRecordHandler handler =(RuntimeRecordHandler) context.getBean("runtimeRecordHandler");
+		//RuntimeRecordJDBCTemplate runtimeJDBCTemplate = 
+		//	      (RuntimeRecordJDBCTemplate)context.getBean("JDBCTemplate");
 	}
 }

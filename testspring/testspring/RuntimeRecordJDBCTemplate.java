@@ -1,5 +1,6 @@
 package testspring.testspring;
 
+import java.util.Date;
 import java.util.List;
 import javax.sql.DataSource;
 
@@ -24,6 +25,7 @@ public class RuntimeRecordJDBCTemplate implements RuntimeRecordDAO {
 		System.out.println(jdbcTemplateObject.update(SQL, record.getStartTime(),
 				record.getEndTime(), record.getClassName(),
 				record.getMethodName()));
+//		System.out.println(jdbcTemplateObject.update(SQL,"2009-09-22 08:08:11","2009-09-22 08:08:20", record.getClassName(),record.getMethodName()));
 		System.out.println("Stored a Record");
 	}
 

@@ -1,5 +1,9 @@
 package testspring.testspring;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,8 +28,14 @@ public class MeasureTime {
 			System.out.println("After Method");
 			System.out.println("The performance took " + (end - start)
 					+ " milliseconds.");
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss.SSS");
+			Calendar calendar = Calendar.getInstance();
+	        calendar.setTimeInMillis(start);
+	        String startTime = formatter.format(calendar.getTime());
+	        calendar.setTimeInMillis(end);
+	        String endTime = formatter.format(calendar.getTime());
 			//create RunTimeRecord
-			RuntimeRecord record = new RuntimeRecord(Long.toString(start), Long.toString(end), joinpoint.getTarget().getClass().getName(), joinpoint.getSignature().getName());
+			RuntimeRecord record = new RuntimeRecord(startTime, endTime, joinpoint.getTarget().getClass().getName(), joinpoint.getSignature().getName());
 			//SerializeObject serialize = new JSONSerialization();
 			System.out.println(record);
 			store.doStore(record);
